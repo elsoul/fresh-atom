@@ -34,16 +34,12 @@ jobs:
         with:
           script: |
             const tag = process.env.version;
-            const latestCommitSha = await github.git.getCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              commit_sha: context.sha,
-            });
-            await github.git.createRef({
+            const latestCommitSha = context.sha;  
+            await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: `refs/tags/${tag}`,
-              sha: latestCommitSha.data.sha,
+              sha: latestCommitSha,
             });
             core.setOutput('tag', tag);
 
