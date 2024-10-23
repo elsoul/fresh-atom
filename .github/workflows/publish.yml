@@ -47,7 +47,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag: ${{ steps.get_version.outputs.tag }}
-          title: "Release ${{ steps.get_version.outputs.tag }}"
+          title: "${{ steps.get_version.outputs.tag }}"
 
       - name: Publish package
         run: deno publish
