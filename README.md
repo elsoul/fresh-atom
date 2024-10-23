@@ -19,10 +19,18 @@ and reactivity, ideal for edge-native applications.
 ## Installation
 
 To install and use `@elsoul/fresh-atom` in your project, you can import it
-directly from the JavaScript Standard Registry (JSR).
+directly from the JavaScript Standard Registry (JSR) or from the Deno land:
+
+### Using JSR
 
 ```ts
 import { atom, useAtom } from 'jsr:@elsoul/fresh-atom'
+```
+
+### Using Deno Land
+
+```ts
+import { atom, useAtom } from 'https://deno.land/x/fresh_atom/mod.ts'
 ```
 
 ## Usage
