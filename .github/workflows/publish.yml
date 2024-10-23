@@ -20,5 +20,39 @@ jobs:
         with:
           deno-version: v2.x
 
+      - name: Read version from deno.json
+        id: get_version
+        run: |
+          VERSION=$(cat deno.json | jq -r '.version')
+          echo "version=$VERSION" >> $GITHUB_ENV
+
       - name: Publish package
         run: deno publish
+
+      - name: Create GitHub Tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = process.env.version;
+            const latestCommitSha = await github.git.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+            });
+            await github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${tag}`,
+              sha: latestCommitSha.data.sha,
+            });
+            core.setOutput('tag', tag);
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          release_name: Release ${{ steps.get_version.outputs.version }}
+          body: |
+            Automatically generated release for version ${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: false
