@@ -1,6 +1,6 @@
 {
   "name": "@elsoul/fresh-atom",
-  "version": "0.3.3",
+  "version": "1.0.0",
   "description": "Lightweight global state management library for Fresh framework using Preact signals.",
   "runtimes": ["deno", "browser"],
   "exports": "./mod.ts",
